@@ -1,6 +1,7 @@
 package com.lokovsek.appbarfloatingactionbuttonmaterialdesigncomponents;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +10,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -39,13 +39,13 @@ public class SplashActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         // Animation Calls
-        Animation mFromTopAnimantion = AnimationUtils.loadAnimation(this, R.anim.from_top_animation);
-        Animation mBottomAnimation = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
-        Animation mMiddleFromLeftAnimation = AnimationUtils.loadAnimation(this, R.anim.middle_animation);
-        Animation mFromLeftAnimation = AnimationUtils.loadAnimation(this, R.anim.from_left_animation);
-        Animation mFromBottomAnimation = AnimationUtils.loadAnimation(this, R.anim.from_bottom_animation);
-        Animation mBackToTopAnimation = AnimationUtils.loadAnimation(this, R.anim.back_to_top_animation);
-        Animation mToRightAnimation = AnimationUtils.loadAnimation(this, R.anim.to_right_animation);
+        Animation mFromTopAnimantion = AnimationUtils.loadAnimation(this, R.anim.from_top_animation_view);
+        Animation mBottomAnimation = AnimationUtils.loadAnimation(this, R.anim.bottom_animation_view);
+        Animation mMiddleFromLeftAnimation = AnimationUtils.loadAnimation(this, R.anim.middle_animation_view);
+        Animation mFromLeftAnimation = AnimationUtils.loadAnimation(this, R.anim.from_left_animation_view);
+        Animation mFromBottomAnimation = AnimationUtils.loadAnimation(this, R.anim.from_bottom_animation_view);
+        Animation mBackToTopAnimation = AnimationUtils.loadAnimation(this, R.anim.back_to_top_animation_view);
+        Animation mToRightAnimation = AnimationUtils.loadAnimation(this, R.anim.to_right_animation_view);
 
         // Setting Animations to the elements of Splash Screen
         mFirstView.setAnimation(mFromTopAnimantion);
@@ -62,7 +62,9 @@ public class SplashActivity extends AppCompatActivity {
                 Single.timer(3, TimeUnit.SECONDS)
                         .subscribe(seconds -> {
                             Log.d("Splash", "Finishing splash!");
-                            startActivity(new Intent(this, MainActivity.class));
+                            Intent intent = new Intent(this, MainActivity.class);
+                            ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.activity_anim_frag_fade_in, R.anim.activity_anim_frag_fade_out);
+                            startActivity(intent, options.toBundle());
                             finish();
                         }, throwable -> {
                             Log.d("Splash", "Error: " + throwable.getMessage());
